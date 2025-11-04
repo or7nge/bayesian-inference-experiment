@@ -11,15 +11,6 @@ The aim is to show, in a very small and clear setting, how ideas from Bayesian r
 - **Dropout as a Bayesian Approximation** (Gal & Ghahramani 2016): motivated the use of dropout at test time to get an uncertainty estimate.
 - **Calibration of Pre-trained Transformers** (Desai & Durrett 2020): explained reliability diagrams and simple probability calibration.
 
-## Repository Structure
-
-- `src/astro_demo/` - Core Python modules for synthetic data, baseline solver integration, and calibration utilities.
-- `notebooks/astro_calibration_demo.ipynb` - End-to-end workflow that reproduces the experiment and figures.
-- `docs/` - Supporting references cited in the overview for deeper background.
-- `artifacts/` - Generated figures (sample tiles, reliability diagram, entropy histogram) referenced in the write-up.
-- `report.tex` & `report.pdf` - LaTeX source and compiled report mirrored in this README.
-- `email_to_steven.txt` - Draft notes for the concise status update to Steven.
-
 ## Experiment Setup
 
 I generated 256 synthetic tiles, each with 12–24 simulated stars, then masked most of them so only three to seven bright stars remained. The label is the quadrant that contains the centroid of the visible stars, so this is a simple four-class task. The split is 205 training and 51 validation examples.
@@ -43,6 +34,15 @@ On average the stated confidence differs from the true accuracy by 24 percentage
 During training, the model randomly disables a subset of its neurons (dropout). To estimate uncertainty I keep this randomness turned on at test time and run the same input many times. Then I average the probabilities and measure their spread with entropy. Higher entropy means more uncertainty. With 50 runs, the predictive entropy clusters around 0.7 nats. Incorrect predictions have higher entropy (about 0.84 on average) than correct ones (about 0.69).
 
 <img src="artifacts/entropy_hist.png" alt="Predictive entropy histogram" width="50%">
+
+## Repository Structure
+
+- `src/astro_demo/` - Core Python modules for synthetic data, baseline solver integration, and calibration utilities.
+- `notebooks/astro_calibration_demo.ipynb` - End-to-end workflow that reproduces the experiment and figures.
+- `docs/` - Supporting references cited in the overview for deeper background.
+- `artifacts/` - Generated figures (sample tiles, reliability diagram, entropy histogram) referenced in the write-up.
+- `report.tex` & `report.pdf` - LaTeX source and compiled report mirrored in this README.
+- `email_to_steven.txt` - Draft notes for the concise status update to Steven.
 
 ## Summary
 
